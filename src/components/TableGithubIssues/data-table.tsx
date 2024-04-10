@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useRouter } from "next/router";
+import { useState, useMemo, useEffect } from "react";
 
 import {
   ColumnDef,
@@ -32,11 +33,14 @@ interface DataTableProps {
   data: TIssue[];
 }
 
+interface FiltersState {
+  label?: string;
+  author?: string;
+}
+
 export default function DataTable({ columns, data }: DataTableProps) {
-  const [filters, setFilters] = useState({
-    label: undefined,
-    author: undefined,
-  });
+  const router = useRouter();
+  const [filters, setFilters] = useState<FiltersState>({});
 
   const [sortedFilteredData, setSortedFilteredData] = useState(data);
 
@@ -63,11 +67,22 @@ export default function DataTable({ columns, data }: DataTableProps) {
     filterType: string,
     value: string | undefined
   ) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterType]: value,
-    }));
+    const newFilters = { ...filters, [filterType]: value };
+    setFilters(newFilters);
+
+    const newQuery = { ...router.query, [filterType]: value || "" };
+    router.push({ pathname: router.pathname, query: newQuery }, undefined, {
+      shallow: true,
+    });
   };
+
+  useEffect(() => {
+    const query = router.query;
+    setFilters({
+      label: typeof query.label === "string" ? query.label : undefined,
+      author: typeof query.author === "string" ? query.author : undefined,
+    });
+  }, [router.query]);
 
   return (
     <div className="w-full">
