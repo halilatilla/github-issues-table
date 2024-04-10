@@ -1,5 +1,5 @@
-import TableGithubIssues from "@/components/TableGithubIssues";
-import { TIssue } from "@/types";
+import TableGithubIssues from '@/components/TableGithubIssues';
+import { TIssue } from '@/types';
 
 interface IHomeProps {
   issues: TIssue[];
@@ -22,7 +22,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      issues: issues || [],
-    },
+      issues: issues || []
+    }
   };
 }

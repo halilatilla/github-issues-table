@@ -38,7 +38,7 @@ export type TIssue = {
     default: boolean;
     description: string | null;
   }>;
-  state: "open" | "closed";
+  state: 'open' | 'closed';
   locked: boolean;
   assignee: {
     avatar_url: string;
@@ -66,8 +66,8 @@ export type TIssue = {
   reactions: {
     url: string;
     total_count: number;
-    "+1": number;
-    "-1": number;
+    '+1': number;
+    '-1': number;
     laugh: number;
     hooray: number;
     confused: number;

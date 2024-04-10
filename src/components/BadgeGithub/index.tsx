@@ -1,5 +1,5 @@
-import { Badge } from "@/components/ui/badge";
-import { getReadableTextColor } from "@/lib/utils";
+import { Badge } from '@/components/ui/badge';
+import { getReadableTextColor } from '@/lib/utils';
 
 interface BadgeGithubProps {
   text: string;
@@ -13,7 +13,7 @@ const BadgeGithub = ({ text, bgColor }: BadgeGithubProps) => {
     <Badge
       style={{
         backgroundColor: `#${bgColor}`,
-        color: textColor,
+        color: textColor
       }}
     >
       {text}

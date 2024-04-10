@@ -1,23 +1,25 @@
-import { ColumnDef } from "@tanstack/react-table";
 
-import { TIssue } from "@/types";
 
-import Image from "next/image";
-import Link from "next/link";
-import { CircleDot, MessageSquare } from "lucide-react";
-import BadgeGithub from "../BadgeGithub";
-import { timeSince } from "@/lib/utils";
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { ColumnDef } from '@tanstack/react-table';
+import { CircleDot, MessageSquare } from 'lucide-react';
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  TooltipTrigger
+} from '@/components/ui/tooltip';
+import { timeSince } from '@/lib/utils';
+import { TIssue } from '@/types';
+
+import BadgeGithub from '../BadgeGithub';
 
 export const columns: ColumnDef<TIssue>[] = [
   {
-    id: "details",
+    id: 'details',
     cell: ({ row }) => (
       <div className="flex flex-col gap-1">
         <div className="grid grid-cols-[1fr_100px] gap-1">
@@ -29,7 +31,7 @@ export const columns: ColumnDef<TIssue>[] = [
                   {row.original.title}
                 </div>
               </Link>
-              {row.original.labels.map((label) => (
+              {row.original.labels.map(label => (
                 <BadgeGithub
                   key={label.id}
                   text={label.name}
@@ -77,9 +79,9 @@ export const columns: ColumnDef<TIssue>[] = [
           </div>
         </div>
         <div className="text-muted-foreground text-xs">
-          #{row.original.number}{" "}
-          {row.original.state === "open" ? "opened" : "closed"}{" "}
-          {timeSince(new Date(row.original.created_at))} by{" "}
+          #{row.original.number}{' '}
+          {row.original.state === 'open' ? 'opened' : 'closed'}{' '}
+          {timeSince(new Date(row.original.created_at))} by{' '}
           <Link
             href={row.original.user.html_url}
             className="hover:text-blue-500"
@@ -88,6 +90,6 @@ export const columns: ColumnDef<TIssue>[] = [
           </Link>
         </div>
       </div>
-    ),
-  },
+    )
+  }
 ];

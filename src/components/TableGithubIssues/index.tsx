@@ -1,6 +1,7 @@
-import { TIssue } from "@/types";
-import { columns } from "./columns";
-import DataTable from "./data-table";
+import { TIssue } from '@/types';
+
+import { columns } from './columns';
+import DataTable from './data-table';
 
 interface ITableGithubIssuesProps {
   issues: TIssue[];

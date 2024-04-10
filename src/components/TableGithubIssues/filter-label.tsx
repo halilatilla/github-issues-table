@@ -1,15 +1,19 @@
+import { useMemo, useState } from 'react';
+
+import { XIcon } from 'lucide-react';
+
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "../ui/button";
-import { XIcon } from "lucide-react";
-import { useMemo, useState } from "react";
-import { TIssue } from "@/types";
+  SelectValue
+} from '@/components/ui/select';
+import { TIssue } from '@/types';
+
+import { Button } from '../ui/button';
+
 
 interface FilterLabelProps {
   data: TIssue[];
@@ -21,30 +25,30 @@ const FilterLabel = ({ data, handleFilterChange }: FilterLabelProps) => {
 
   const labelOptions = useMemo(() => {
     return Array.from(
-      new Set(data.flatMap((d) => d.labels.map((l) => l.name))).values()
-    ).map((label) => ({
+      new Set(data.flatMap(d => d.labels.map(l => l.name))).values()
+    ).map(label => ({
       label,
-      value: label,
+      value: label
     }));
   }, [data]);
 
   const handleReset = () => {
     setKey(+new Date());
-    handleFilterChange("label", undefined);
+    handleFilterChange('label', undefined);
   };
 
   return (
     <div className="flex gap-2">
       <Select
-        onValueChange={(value) => handleFilterChange("label", value)}
-        key={key + "label"}
+        onValueChange={value => handleFilterChange('label', value)}
+        key={key + 'label'}
       >
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Select a label" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {labelOptions.map((option) => (
+            {labelOptions.map(option => (
               <SelectItem key={option.label} value={option.value}>
                 {option.label}
               </SelectItem>

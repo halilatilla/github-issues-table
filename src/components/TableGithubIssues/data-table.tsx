@@ -1,32 +1,31 @@
-import { useRouter } from "next/router";
-import { useState, useMemo, useEffect } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+  useReactTable
+} from '@tanstack/react-table';
+import { CircleDot } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  TableRow
+} from '@/components/ui/table';
+import { TIssue } from '@/types';
 
-import { Separator } from "@/components/ui/separator";
+import DataSort from './data-sort';
+import FilterAuthor from './filter-author';
+import FilterLabel from './filter-label';
 
-import FilterLabel from "./filter-label";
-import FilterAuthor from "./filter-author";
-import DataSort from "./data-sort";
-import { TIssue } from "@/types";
-import { CircleDot } from "lucide-react";
 
 interface DataTableProps {
   columns: ColumnDef<TIssue, any>[];
@@ -45,9 +44,9 @@ export default function DataTable({ columns, data }: DataTableProps) {
   const [sortedFilteredData, setSortedFilteredData] = useState(data);
 
   const filteredData = useMemo(() => {
-    return sortedFilteredData.filter((item) => {
+    return sortedFilteredData.filter(item => {
       const labelMatch = filters.label
-        ? item.labels.some((label) => label.name === filters.label)
+        ? item.labels.some(label => label.name === filters.label)
         : true;
       const authorMatch = filters.author
         ? item.user.login === filters.author
@@ -60,7 +59,7 @@ export default function DataTable({ columns, data }: DataTableProps) {
     data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: getPaginationRowModel()
   });
 
   const handleFilterChange = (
@@ -70,17 +69,17 @@ export default function DataTable({ columns, data }: DataTableProps) {
     const newFilters = { ...filters, [filterType]: value };
     setFilters(newFilters);
 
-    const newQuery = { ...router.query, [filterType]: value || "" };
+    const newQuery = { ...router.query, [filterType]: value || '' };
     router.push({ pathname: router.pathname, query: newQuery }, undefined, {
-      shallow: true,
+      shallow: true
     });
   };
 
   useEffect(() => {
     const query = router.query;
     setFilters({
-      label: typeof query.label === "string" ? query.label : undefined,
-      author: typeof query.author === "string" ? query.author : undefined,
+      label: typeof query.label === 'string' ? query.label : undefined,
+      author: typeof query.author === 'string' ? query.author : undefined
     });
   }, [router.query]);
 
@@ -89,8 +88,8 @@ export default function DataTable({ columns, data }: DataTableProps) {
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            <TableRow key={"test"}>
-              <TableHead key={"new"}>
+            <TableRow key={'test'}>
+              <TableHead key={'new'}>
                 <div className="flex gap-4 justify-between items-center">
                   {filteredData.length > 0 ? (
                     <div className="flex gap-2 items-center">
@@ -123,12 +122,12 @@ export default function DataTable({ columns, data }: DataTableProps) {
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map(row => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,

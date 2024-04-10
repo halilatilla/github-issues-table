@@ -1,13 +1,14 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+
 import {
   Select,
-  SelectItem,
-  SelectTrigger,
   SelectContent,
   SelectGroup,
-  SelectValue,
-} from "@/components/ui/select";
-import { TIssue } from "@/types";
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+import { TIssue } from '@/types';
 
 interface DataSortProps {
   data: TIssue[];
@@ -16,13 +17,13 @@ interface DataSortProps {
 
 interface SortConfig {
   key: keyof TIssue;
-  direction: "ascending" | "descending";
+  direction: 'ascending' | 'descending';
 }
 
 const DataSort = ({ data, setSortedFilteredData }: DataSortProps) => {
   const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: "created_at",
-    direction: "ascending",
+    key: 'created_at',
+    direction: 'ascending'
   });
 
   useEffect(() => {
@@ -32,17 +33,17 @@ const DataSort = ({ data, setSortedFilteredData }: DataSortProps) => {
     ): TIssue[] => {
       return [...data].sort((a, b) => {
         const aValue =
-          key === "created_at" || key === "updated_at"
+          key === 'created_at' || key === 'updated_at'
             ? new Date(a[key] as string).getTime()
             : a[key];
         const bValue =
-          key === "created_at" || key === "updated_at"
+          key === 'created_at' || key === 'updated_at'
             ? new Date(b[key] as string).getTime()
             : b[key];
-        // @ts-ignore
-        if (aValue < bValue) return direction === "ascending" ? -1 : 1;
-        // @ts-ignore
-        if (aValue > bValue) return direction === "ascending" ? 1 : -1;
+        // @ts-expect-error
+        if (aValue < bValue) return direction === 'ascending' ? -1 : 1;
+        // @ts-expect-error
+        if (aValue > bValue) return direction === 'ascending' ? 1 : -1;
         return 0;
       });
     };
@@ -52,10 +53,10 @@ const DataSort = ({ data, setSortedFilteredData }: DataSortProps) => {
   }, [data, sortConfig, setSortedFilteredData]);
 
   const handleSortChange = (value: string) => {
-    const [key, direction] = value.split(":");
+    const [key, direction] = value.split(':');
     setSortConfig({
       key: key as keyof TIssue,
-      direction: direction as "ascending" | "descending",
+      direction: direction as 'ascending' | 'descending'
     });
   };
 
