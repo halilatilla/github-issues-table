@@ -1,15 +1,10 @@
-import * as React from "react";
+import { useState, useMemo } from "react";
 
 import {
   ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -24,41 +19,55 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+import { Separator } from "@/components/ui/separator";
+
+import FilterLabel from "./filter-label";
+import FilterAuthor from "./filter-author";
+import DataSort from "./data-sort";
+import { TIssue } from "@/types";
+import { CircleDot } from "lucide-react";
+
+interface DataTableProps {
+  columns: ColumnDef<TIssue, any>[];
+  data: TIssue[];
 }
 
-export default function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+export default function DataTable({ columns, data }: DataTableProps) {
+  const [filters, setFilters] = useState({
+    label: undefined,
+    author: undefined,
+  });
+
+  const [sortedFilteredData, setSortedFilteredData] = useState(data);
+
+  const filteredData = useMemo(() => {
+    return sortedFilteredData.filter((item) => {
+      const labelMatch = filters.label
+        ? item.labels.some((label) => label.name === filters.label)
+        : true;
+      const authorMatch = filters.author
+        ? item.user.login === filters.author
+        : true;
+      return labelMatch && authorMatch;
+    });
+  }, [sortedFilteredData, filters]);
 
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
   });
+
+  const handleFilterChange = (
+    filterType: string,
+    value: string | undefined
+  ) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: value,
+    }));
+  };
 
   return (
     <div className="w-full">
@@ -67,7 +76,33 @@ export default function DataTable<TData, TValue>({
           <TableHeader>
             <TableRow key={"test"}>
               <TableHead key={"new"}>
-                <div></div>
+                <div className="flex gap-4 justify-between items-center">
+                  {filteredData.length > 0 ? (
+                    <div className="flex gap-2 items-center">
+                      <CircleDot size={16} />
+                      <div className="flex flex-wrap gap-1">
+                        {filteredData.length} Open
+                      </div>
+                    </div>
+                  ) : null}
+
+                  <div className="flex gap-4 justify-end">
+                    <FilterLabel
+                      data={data}
+                      handleFilterChange={handleFilterChange}
+                    />
+                    <Separator orientation="vertical" className="h-10" />
+                    <FilterAuthor
+                      data={data}
+                      handleFilterChange={handleFilterChange}
+                    />
+                    <Separator orientation="vertical" className="h-10" />
+                    <DataSort
+                      data={data}
+                      setSortedFilteredData={setSortedFilteredData}
+                    />
+                  </div>
+                </div>
               </TableHead>
             </TableRow>
           </TableHeader>
