@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import {
   Select,
@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import useSort from '@/hooks/useSort';
 import { IIssue } from '@/types';
 
 interface DataSortProps {
@@ -15,50 +16,8 @@ interface DataSortProps {
   setSortedData: Dispatch<SetStateAction<IIssue[]>>;
 }
 
-interface SortConfig {
-  key: keyof IIssue;
-  direction: 'ascending' | 'descending';
-}
-
 const DataSort = ({ data, setSortedData }: DataSortProps) => {
-  const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: 'created_at',
-    direction: 'ascending'
-  });
-
-  useEffect(() => {
-    const sortData = (
-      data: IIssue[],
-      { key, direction }: SortConfig
-    ): IIssue[] => {
-      return [...data].sort((a, b) => {
-        const aValue =
-          key === 'created_at' || key === 'updated_at'
-            ? new Date(a[key] as string).getTime()
-            : a[key];
-        const bValue =
-          key === 'created_at' || key === 'updated_at'
-            ? new Date(b[key] as string).getTime()
-            : b[key];
-        // @ts-expect-error
-        if (aValue < bValue) return direction === 'ascending' ? -1 : 1;
-        // @ts-expect-error
-        if (aValue > bValue) return direction === 'ascending' ? 1 : -1;
-        return 0;
-      });
-    };
-
-    const sortedData = sortData(data, sortConfig);
-    setSortedData(sortedData);
-  }, [data, sortConfig, setSortedData]);
-
-  const handleSortChange = (value: string) => {
-    const [key, direction] = value.split(':');
-    setSortConfig({
-      key: key as keyof IIssue,
-      direction: direction as 'ascending' | 'descending'
-    });
-  };
+  const { handleSortChange } = useSort(data, setSortedData);
 
   return (
     <Select onValueChange={handleSortChange}>

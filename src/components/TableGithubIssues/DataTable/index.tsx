@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import useFilter from '@/hooks';
+import useFilter from '@/hooks/useFilter';
 import { getFilteredDataByLabelAndAuthor } from '@/lib/utils';
 import { IIssue } from '@/types';
 
