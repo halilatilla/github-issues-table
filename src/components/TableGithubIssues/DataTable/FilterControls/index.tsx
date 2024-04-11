@@ -5,9 +5,9 @@ import { CircleDot } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { IIssue } from '@/types';
 
-import DataSort from './data-sort';
-import FilterAuthor from './filter-author';
-import FilterLabel from './filter-label';
+import DataSort from './DataSort';
+import FilterAuthor from './FilterAuthor';
+import FilterLabel from './FilterLabel';
 
 interface FilterControlsProps {
   data: IIssue[];
