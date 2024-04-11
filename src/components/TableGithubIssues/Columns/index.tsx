@@ -1,18 +1,10 @@
-import Image from 'next/image';
-import Link from 'next/link';
-
 import { ColumnDef } from '@tanstack/react-table';
-import { MessageSquare } from 'lucide-react';
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
-import { timeSince } from '@/lib/utils';
 import { IIssue } from '@/types';
 
+import Assignee from './Assignee';
+import Comments from './Comments';
+import Details from './Details';
 import TitleAndLabels from './TitleAndLabels';
 
 const Columns: ColumnDef<IIssue>[] = [
@@ -30,51 +22,28 @@ const Columns: ColumnDef<IIssue>[] = [
           <div className="flex items-center justify-between">
             <div>
               {row?.original?.assignee && (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link
-                        href={row.original.assignee.html_url}
-                        target="_blank"
-                      >
-                        <Image
-                          src={row?.original?.assignee?.avatar_url}
-                          alt={row.original.assignee.login}
-                          className="rounded-full"
-                          width={20}
-                          height={20}
-                        />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Assigned to {row.original.assignee.login} </p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <Assignee
+                  assigneeAvatarUrl={row?.original?.assignee?.avatar_url}
+                  assigneeName={row.original.assignee.login}
+                  assigneeUrl={row.original.assignee.html_url}
+                />
               )}
             </div>
             {row.original.comments > 0 && (
-              <Link
-                href={row.original.html_url}
-                className="text-gray-500 hover:text-blue-500 flex items-start gap-1 text-xs"
-                target="_blank"
-              >
-                <MessageSquare size={16} /> {row.original.comments}
-              </Link>
+              <Comments
+                url={row.original.html_url}
+                commentsCount={row.original.comments}
+              />
             )}
           </div>
         </div>
-        <div className="text-muted-foreground text-xs">
-          #{row.original.number}{' '}
-          {row.original.state === 'open' ? 'opened' : 'closed'}{' '}
-          {timeSince(new Date(row.original.created_at))} by{' '}
-          <Link
-            href={row.original.user.html_url}
-            className="hover:text-blue-500"
-          >
-            {row.original.user.login}
-          </Link>
-        </div>
+        <Details
+          number={row.original.number}
+          state={row.original.state}
+          createdAt={row.original.created_at}
+          userUrl={row.original.user.html_url}
+          userName={row.original.user.login}
+        />
       </div>
     )
   }
