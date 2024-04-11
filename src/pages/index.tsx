@@ -6,8 +6,6 @@ interface IHomeProps {
 }
 
 export default function Home({ issues }: IHomeProps) {
-  console.log(issues);
-
   return (
     <main className="container mx-auto py-10">
       <TableGithubIssues issues={issues} />
