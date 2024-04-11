@@ -12,7 +12,7 @@ import { TIssue } from '@/types';
 
 interface DataSortProps {
   data: TIssue[];
-  setSortedFilteredData: Dispatch<SetStateAction<TIssue[]>>;
+  setSortedData: Dispatch<SetStateAction<TIssue[]>>;
 }
 
 interface SortConfig {
@@ -20,7 +20,7 @@ interface SortConfig {
   direction: 'ascending' | 'descending';
 }
 
-const DataSort = ({ data, setSortedFilteredData }: DataSortProps) => {
+const DataSort = ({ data, setSortedData }: DataSortProps) => {
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: 'created_at',
     direction: 'ascending'
@@ -49,8 +49,8 @@ const DataSort = ({ data, setSortedFilteredData }: DataSortProps) => {
     };
 
     const sortedData = sortData(data, sortConfig);
-    setSortedFilteredData(sortedData);
-  }, [data, sortConfig, setSortedFilteredData]);
+    setSortedData(sortedData);
+  }, [data, sortConfig, setSortedData]);
 
   const handleSortChange = (value: string) => {
     const [key, direction] = value.split(':');

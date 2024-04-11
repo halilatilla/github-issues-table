@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 
 import { XIcon } from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -11,9 +12,6 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { TIssue } from '@/types';
-
-import { Button } from '../ui/button';
-
 
 interface FilterLabelProps {
   data: TIssue[];
