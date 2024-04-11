@@ -8,15 +8,15 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
 interface DataSortProps {
-  data: TIssue[];
-  setSortedData: Dispatch<SetStateAction<TIssue[]>>;
+  data: IIssue[];
+  setSortedData: Dispatch<SetStateAction<IIssue[]>>;
 }
 
 interface SortConfig {
-  key: keyof TIssue;
+  key: keyof IIssue;
   direction: 'ascending' | 'descending';
 }
 
@@ -28,9 +28,9 @@ const DataSort = ({ data, setSortedData }: DataSortProps) => {
 
   useEffect(() => {
     const sortData = (
-      data: TIssue[],
+      data: IIssue[],
       { key, direction }: SortConfig
-    ): TIssue[] => {
+    ): IIssue[] => {
       return [...data].sort((a, b) => {
         const aValue =
           key === 'created_at' || key === 'updated_at'
@@ -55,7 +55,7 @@ const DataSort = ({ data, setSortedData }: DataSortProps) => {
   const handleSortChange = (value: string) => {
     const [key, direction] = value.split(':');
     setSortConfig({
-      key: key as keyof TIssue,
+      key: key as keyof IIssue,
       direction: direction as 'ascending' | 'descending'
     });
   };

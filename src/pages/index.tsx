@@ -1,8 +1,8 @@
 import TableGithubIssues from '@/components/TableGithubIssues';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
 interface IHomeProps {
-  issues: TIssue[];
+  issues: IIssue[];
 }
 
 export default function Home({ issues }: IHomeProps) {
@@ -16,7 +16,7 @@ export default function Home({ issues }: IHomeProps) {
 export async function getServerSideProps() {
   const API_URL = process.env.API_URL;
   const res = await fetch(`${API_URL}`);
-  const issues = (await res.json()) as TIssue[];
+  const issues = (await res.json()) as IIssue[];
 
   return {
     props: {

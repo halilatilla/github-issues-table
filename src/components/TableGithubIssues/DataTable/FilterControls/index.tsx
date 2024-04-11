@@ -3,14 +3,14 @@ import React from 'react';
 import { CircleDot } from 'lucide-react';
 
 import { Separator } from '@/components/ui/separator';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
 import DataSort from './data-sort';
 import FilterAuthor from './filter-author';
 import FilterLabel from './filter-label';
 
 interface FilterControlsProps {
-  data: TIssue[];
+  data: IIssue[];
   handleFilterChange: (key: string, value: string | undefined) => void;
   setSortedData: React.Dispatch<React.SetStateAction<any[]>>;
 }

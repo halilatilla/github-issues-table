@@ -11,10 +11,10 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
 interface FilterLabelProps {
-  data: TIssue[];
+  data: IIssue[];
   handleFilterChange: (key: string, value: string | undefined) => void;
 }
 

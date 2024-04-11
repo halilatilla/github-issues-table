@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { IFiltersState, TIssue } from '@/types';
+import { IFiltersState, IIssue } from '@/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -46,7 +46,7 @@ export function timeSince(date: Date): string {
 }
 
 export function getFilteredDataByLabelAndAuthor(
-  data: TIssue[],
+  data: IIssue[],
   filters: IFiltersState
 ) {
   return data.filter(item => {

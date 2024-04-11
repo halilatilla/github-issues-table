@@ -2,9 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { CircleDot, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 
-import BadgeGithub from '@/components/BadgeGithub';
 import {
   Tooltip,
   TooltipContent,
@@ -12,31 +11,21 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { timeSince } from '@/lib/utils';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
-const Columns: ColumnDef<TIssue>[] = [
+import TitleAndLabels from './TitleAndLabels';
+
+const Columns: ColumnDef<IIssue>[] = [
   {
     id: 'details',
     cell: ({ row }) => (
       <div className="flex flex-col gap-1">
         <div className="grid grid-cols-[1fr_100px] gap-1">
-          <div className="flex gap-2 items-start">
-            <CircleDot size={16} color="green" />
-            <div className="flex flex-wrap gap-1">
-              <Link href={row.original.html_url} target="_blank">
-                <div className="font-bold text-[16px] hover:text-blue-500 w-max">
-                  {row.original.title}
-                </div>
-              </Link>
-              {row.original.labels.map(label => (
-                <BadgeGithub
-                  key={label.id}
-                  text={label.name}
-                  bgColor={label.color}
-                />
-              ))}
-            </div>
-          </div>
+          <TitleAndLabels
+            labels={row.original.labels}
+            url={row.original.html_url}
+            title={row.original.title}
+          />
 
           <div className="flex items-center justify-between">
             <div>

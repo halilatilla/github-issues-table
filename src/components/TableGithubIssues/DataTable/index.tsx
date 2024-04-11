@@ -18,14 +18,14 @@ import {
 } from '@/components/ui/table';
 import useFilter from '@/hooks';
 import { getFilteredDataByLabelAndAuthor } from '@/lib/utils';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
 import FilterControls from './FilterControls';
 import PaginationControls from './PaginationControls';
 
 interface DataTableProps {
-  columns: ColumnDef<TIssue, any>[];
-  data: TIssue[];
+  columns: ColumnDef<IIssue, any>[];
+  data: IIssue[];
 }
 
 const DataTable = ({ columns, data }: DataTableProps) => {

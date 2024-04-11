@@ -10,12 +10,12 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
 import { Button } from '../../../ui/button';
 
 interface FilterAuthorProps {
-  data: TIssue[];
+  data: IIssue[];
   handleFilterChange: (key: string, value: string | undefined) => void;
 }
 

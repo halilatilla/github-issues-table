@@ -1,10 +1,10 @@
 import { Table } from '@tanstack/react-table';
 
 import { Button } from '@/components/ui/button';
-import { TIssue } from '@/types';
+import { IIssue } from '@/types';
 
 interface PaginationControlsProps {
-  table: Table<TIssue>;
+  table: Table<IIssue>;
 }
 
 const PaginationControls = ({ table }: PaginationControlsProps) => (
