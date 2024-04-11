@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/select';
 import { TIssue } from '@/types';
 
-import { Button } from '../ui/button';
+import { Button } from '../../../ui/button';
 
 interface FilterAuthorProps {
   data: TIssue[];

@@ -1,11 +1,10 @@
-
-
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { ColumnDef } from '@tanstack/react-table';
 import { CircleDot, MessageSquare } from 'lucide-react';
 
+import BadgeGithub from '@/components/BadgeGithub';
 import {
   Tooltip,
   TooltipContent,
@@ -15,9 +14,7 @@ import {
 import { timeSince } from '@/lib/utils';
 import { TIssue } from '@/types';
 
-import BadgeGithub from '../BadgeGithub';
-
-export const columns: ColumnDef<TIssue>[] = [
+const Columns: ColumnDef<TIssue>[] = [
   {
     id: 'details',
     cell: ({ row }) => (
@@ -93,3 +90,5 @@ export const columns: ColumnDef<TIssue>[] = [
     )
   }
 ];
+
+export default Columns;

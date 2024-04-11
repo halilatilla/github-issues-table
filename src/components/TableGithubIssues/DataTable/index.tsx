@@ -20,15 +20,15 @@ import useFilter from '@/hooks';
 import { getFilteredDataByLabelAndAuthor } from '@/lib/utils';
 import { TIssue } from '@/types';
 
-import FilterControls from './filter-controls';
-import PaginationControls from './pagination-controls';
+import FilterControls from './FilterControls';
+import PaginationControls from './PaginationControls';
 
 interface DataTableProps {
   columns: ColumnDef<TIssue, any>[];
   data: TIssue[];
 }
 
-export default function DataTable({ columns, data }: DataTableProps) {
+const DataTable = ({ columns, data }: DataTableProps) => {
   const { filters, handleFilterChange } = useFilter({
     label: undefined,
     author: undefined
@@ -95,4 +95,6 @@ export default function DataTable({ columns, data }: DataTableProps) {
       <PaginationControls table={table} />
     </div>
   );
-}
+};
+
+export default DataTable;
