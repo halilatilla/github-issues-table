@@ -79,3 +79,8 @@ export type TIssue = {
   performed_via_github_app: null | string; // This could be expanded to a specific type if you have information about the app
   state_reason: null | string;
 };
+
+export interface IFiltersState {
+  label?: string;
+  author?: string;
+}

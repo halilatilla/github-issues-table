@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import { IFiltersState, TIssue } from '@/types';
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -41,4 +43,19 @@ export function timeSince(date: Date): string {
     return Math.floor(interval) + ' minutes ago';
   }
   return 'just now'; // For anything less than a minute
+}
+
+export function getFilteredDataByLabelAndAuthor(
+  data: TIssue[],
+  filters: IFiltersState
+) {
+  return data.filter(item => {
+    const labelMatch = filters.label
+      ? item.labels.some(label => label.name === filters.label)
+      : true;
+    const authorMatch = filters.author
+      ? item.user.login === filters.author
+      : true;
+    return labelMatch && authorMatch;
+  });
 }
