@@ -14,7 +14,6 @@ import { TIssue } from '@/types';
 
 import { Button } from '../ui/button';
 
-
 interface FilterAuthorProps {
   data: TIssue[];
   handleFilterChange: (key: string, value: string | undefined) => void;
